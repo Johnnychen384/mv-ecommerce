@@ -1,0 +1,39 @@
+{
+  "name": "mv-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johnnychen384/mv-ecommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Johnnychen384/mv-ecommerce/issues"
+  },
+  "homepage": "https://github.com/Johnnychen384/mv-ecommerce#readme",
+  "dependencies": {
+    "@types/react": "^18.0.34",
+    "@types/react-dom": "^18.0.11",
+    "axios": "^1.2.2",
+    "babel": "^6.23.0",
+    "nodemon": "^2.0.19",
+    "parcel": "^2.8.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.2",
+    "typescript": "^5.0.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "devDependencies": {
+    "buffer": "^5.7.1",
+    "process": "^0.11.10"
+  }
+}
