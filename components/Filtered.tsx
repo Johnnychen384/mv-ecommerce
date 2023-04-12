@@ -6,12 +6,13 @@ import { ElectronicCard } from "./ElectronicCard"
 
 type mainProps = {
     clothesArray: productObject[],
-    electronicArray: productObject[]
+    electronicArray: productObject[],
+    selectProduct: (product: productObject) => void
 }
 
-export const Filtered = ({clothesArray, electronicArray}: mainProps) => {
-    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item}/>)
-    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item}/>)
+export const Filtered = ({clothesArray, electronicArray, selectProduct}: mainProps) => {
+    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item} selectProduct={selectProduct}/>)
+    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item} selectProduct={selectProduct}/>)
     const { category } = useParams();
 
 

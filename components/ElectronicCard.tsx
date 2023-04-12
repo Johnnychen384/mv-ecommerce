@@ -2,11 +2,12 @@ import React from "react"
 import { productObject } from './interfaces'
 
 type CardProps = {
-    electronicObject: productObject
+    electronicObject: productObject,
+    selectProduct: (product: productObject) => void
 }
 
 
-export const ElectronicCard = ({ electronicObject }: CardProps) => {
+export const ElectronicCard = ({ electronicObject, selectProduct }: CardProps) => {
     return (
         <div className="col">
             <div className="card shadow-sm">
@@ -16,7 +17,7 @@ export const ElectronicCard = ({ electronicObject }: CardProps) => {
                     <p className="card-text text-start">$ {electronicObject.price}</p>
                     <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
-                            <button type="button" className="btn btn-sm btn-outline-secondary">Details</button>
+                            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => selectProduct(electronicObject)}>Details</button>
                         </div>
                     </div>
                 </div>

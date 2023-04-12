@@ -6,16 +6,17 @@ import { ElectronicCard } from "./ElectronicCard"
 
 type mainProps = {
     clothesArray: productObject[],
-    electronicArray: productObject[]
+    electronicArray: productObject[],
+    selectProduct: (product: productObject) => void
 }
 
 
-export const Main = ({clothesArray, electronicArray}: mainProps) => {
+export const Main = ({clothesArray, electronicArray, selectProduct}: mainProps) => {
 
-    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item}/>)
+    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item} selectProduct={selectProduct}/>)
     const clothesCards3 = [clothesCards[0], clothesCards[1], clothesCards[2]]
 
-    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item}/>)
+    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item} selectProduct={selectProduct}/>)
     const electronicCards3 = [electronicCards[0], electronicCards[1], electronicCards[2]]
     
 

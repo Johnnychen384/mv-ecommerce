@@ -7,6 +7,7 @@ import { Nav } from "./Nav"
 import { Main } from "./Main"
 import { Filtered } from './Filtered'
 import { productObject } from './interfaces'
+import { Details } from "./Details"
 
 
 
@@ -15,6 +16,14 @@ export const App = () => {
     const [username, setUsername] = useState<String | null>(null);
     const [user, setUser] = useState<object | null>(null);
     const [products, setProducts] = useState<productObject[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<productObject>({
+        category: "",
+        id: 0,
+        name: "",
+        price: 0,
+        rating: 0,
+        url: ""
+    });
 
     const navigate = useNavigate();
 
@@ -63,10 +72,11 @@ export const App = () => {
         }
     }
 
-    const clothesArray: productObject[] = products ? products.filter(item => item.category === "Clothing") : [];
-    const electronicArray: productObject[] = products ? products.filter(item => item.category === "Electronic") : [];
-
-
+    const selectProduct = (product: productObject) => {
+        setSelectedProduct(product);
+        navigate("/details")
+    }
+    
     const logOut = () => {
         localStorage.removeItem("user");
         setToken(null);
@@ -74,6 +84,9 @@ export const App = () => {
         setUser(null);
         navigate("/");
     }
+
+    const clothesArray: productObject[] = products ? products.filter(item => item.category === "Clothing") : [];
+    const electronicArray: productObject[] = products ? products.filter(item => item.category === "Electronic") : [];
 
     useEffect(() => {
         let user : {token: String, username: String};
@@ -112,8 +125,9 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<Login loginToken={loginToken} getUser={getUser} setUsername={setUsername}/>} />
                 <Route path="/register" element={<Register registerToken={registerToken} getUser={getUser} setUsername={setUsername}/>} />
-                <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray}/>} />
-                <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray}/>}/>
+                <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>} />
+                <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>}/>
+                <Route path='/details' element={<Details object={selectedProduct}/>} />
             </Routes>
         </main>
     )
