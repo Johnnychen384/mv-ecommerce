@@ -4,11 +4,17 @@ import { Route, Routes, useNavigate} from 'react-router-dom'
 import { Login } from "./Login"
 import { Register } from "./Register"
 import { Nav } from "./Nav"
+import { Main } from "./Main"
+import { Filtered } from './Filtered'
+import { productObject } from './interfaces'
+
+
 
 export const App = () => {
     const [token, setToken] = useState<String | null>(null);
     const [username, setUsername] = useState<String | null>(null);
     const [user, setUser] = useState<object | null>(null);
+    const [products, setProducts] = useState<productObject[]>([]);
 
     const navigate = useNavigate();
 
@@ -20,6 +26,15 @@ export const App = () => {
             console.log(error)
         }
         
+    }
+
+    const registerToken = async (data: object) => {
+        try{
+            const res: AxiosResponse = await axios.post("http://localhost:8080/api/auth/register", data);
+            setToken(res.data.token);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const getUser = async (currentUser: String) => {
@@ -35,14 +50,22 @@ export const App = () => {
         }
     }
 
-    const registerToken = async (data: object) => {
+    const getAllProducts = async () => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        
         try{
-            const res: AxiosResponse = await axios.post("http://localhost:8080/api/auth/register", data);
-            setToken(res.data.token);
+            const res: AxiosResponse = await axios.get(`http://localhost:8080/products/`, config);
+            setProducts(res.data);
         } catch (error) {
             console.log(error)
         }
     }
+
+    const clothesArray: productObject[] = products ? products.filter(item => item.category === "Clothing") : [];
+    const electronicArray: productObject[] = products ? products.filter(item => item.category === "Electronic") : [];
+
 
     const logOut = () => {
         localStorage.removeItem("user");
@@ -61,11 +84,13 @@ export const App = () => {
             setToken(user.token)
             setUsername(user.username)
             getUser(user.username)
+            getAllProducts()
             navigate("/main")
 
         } else {
             if (username && token) {
                 getUser(username);
+                getAllProducts();
 
                 user = {
                     token: token,
@@ -75,7 +100,7 @@ export const App = () => {
                 localStorage.setItem("user", JSON.stringify(user));
             }
         }
-        
+        console.log(products);
     }, [username, token]);
 
 
@@ -83,10 +108,12 @@ export const App = () => {
 
     return (
         <main className='text-center w-100 mx-auto'>
-            {user && <Nav logOut={logOut} />}
+            {username && <Nav logOut={logOut} />}
             <Routes>
                 <Route path="/" element={<Login loginToken={loginToken} getUser={getUser} setUsername={setUsername}/>} />
                 <Route path="/register" element={<Register registerToken={registerToken} getUser={getUser} setUsername={setUsername}/>} />
+                <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray}/>} />
+                <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray}/>}/>
             </Routes>
         </main>
     )

@@ -7,7 +7,7 @@ type navProps = {
 
 export const Nav = ({logOut}: navProps) => {
     return (
-        <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark py-3">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/"><i className="fab fa-shopify"></i></a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,17 +22,16 @@ export const Nav = ({logOut}: navProps) => {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                <li><Link className="dropdown-item" to="/filter/clothes">Clothes</Link></li>
+                                <li><Link className="dropdown-item" to="/filter/electronic">Electronics</Link></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user"></i></a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="/cart">Cart</a></li>
-                                <li><a className="dropdown-item" href="/profile">Profile</a></li>
-                                <li><a className="dropdown-item" href="/" onClick={logOut}>Logout</a></li>
+                                <li><Link className="dropdown-item" to="/cart">Cart</Link></li>
+                                <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                                <li><Link className="dropdown-item" to="/" onClick={logOut}>Logout</Link></li>
                             </ul>
                         </li>
                     </ul>
