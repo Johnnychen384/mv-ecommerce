@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
 
 type loginProps = {
-    loginToken: (data: object) => Promise<void>;
+    loginToken: (data: object) => Promise<void>,
+    getUser: (username: String) => Promise<void>,
+    setUsername: React.Dispatch<React.SetStateAction<String | null>>;
 }
 
-export const Welcome = ({loginToken}: loginProps) => {
+export const Login = ({loginToken, getUser, setUsername}: loginProps) => {
     const [formData, setFormData] = useState({
 		username: "",
         password: ""
 	});
+
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -22,7 +26,12 @@ export const Welcome = ({loginToken}: loginProps) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         loginToken(formData);
-        
+        setUsername(formData.username);
+        setFormData({
+            username: "",
+            password: ""
+        });
+        navigate('/main');
     }
 
 
