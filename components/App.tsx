@@ -6,9 +6,10 @@ import { Register } from "./Register"
 import { Nav } from "./Nav"
 import { Main } from "./Main"
 import { Filtered } from './Filtered'
-import { productObject } from './interfaces'
+import { productObject, tempObject, cartObject } from './interfaces'
 import { Details } from "./Details"
 import { Profile } from "./Profile"
+import { Cart } from "./Cart"
 import "../index.css"
 
 
@@ -18,6 +19,7 @@ export const App = () => {
     const [token, setToken] = useState<String | null>(null);
     const [username, setUsername] = useState<String | null>(null);
     const [user, setUser] = useState<object | null>(null);
+    const [userCart, setUserCart] = useState<cartObject[]>([]);
     const [products, setProducts] = useState<productObject[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<productObject>({
         category: "",
@@ -89,6 +91,58 @@ export const App = () => {
         }
     }
 
+    const getUserCarts = async (currentUser: String) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        
+        try{
+            const res: AxiosResponse = await axios.get(`http://localhost:8080/cart/allUserCarts/${currentUser}`, config);
+            setUserCart(res.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const addToCart = async (data: tempObject) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        
+        try{
+            const res: AxiosResponse = await axios.post(`http://localhost:8080/cart/cart`, data, config);
+
+            if(data.username){
+                getUserCarts(data.username)
+            }
+
+            alert("Item added.")
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updateCart = async (data: tempObject) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        
+        try{
+            const res: AxiosResponse = await axios.put(`http://localhost:8080/cart/cart`, data, config);
+
+            if(data.username){
+                getUserCarts(data.username)
+            }
+
+            console.log(data)
+            alert("Item added.")
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const selectProduct = (product: productObject) => {
         setSelectedProduct(product);
         navigate("/details")
@@ -113,12 +167,14 @@ export const App = () => {
             setToken(users.token)
             setUsername(users.username)
             getUser(users.username)
+            getUserCarts(users.username)
             getAllProducts()
             navigate("/main")
 
         } else {
             if (username && token) {
                 getUser(username);
+                getUserCarts(username)
                 getAllProducts();
 
                 localStorage.setItem("user", JSON.stringify({
@@ -138,11 +194,12 @@ export const App = () => {
             {username && <Nav logOut={logOut} />}
             <Routes>
                 <Route path="/" element={<Login loginToken={loginToken} getUser={getUser} setUsername={setUsername}/>} />
-                <Route path="/register" element={<Register registerToken={registerToken} getUser={getUser} setUsername={setUsername}/>} />
-                <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>} />
-                <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>}/>
-                <Route path='/details' element={<Details object={selectedProduct}/>} />
+                <Route path="/register" element={<Register registerToken={registerToken} getUser={getUser} setUsername={setUsername}/> }/>
+                <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct} addToCart={addToCart} username={username}/> } />
+                <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct} addToCart={addToCart} username={username}/>}/>
+                <Route path='/details' element={<Details object={selectedProduct} addToCart={addToCart} username={username}/>} />
                 <Route path='/profile' element={<Profile user={user} updateUser={updateUser}/>} />
+                <Route path='/cart' element={<Cart userCart={userCart}/>} />
             </Routes>
         </main>
     )

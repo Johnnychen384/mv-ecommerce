@@ -6,7 +6,6 @@ import { userObject } from "./interfaces"
 export const Profile = ({user, updateUser}) => {
     const [formData, setFormData] = useState(user || {});
 
-    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
 		const { name, value } = event.target;
@@ -26,8 +25,6 @@ export const Profile = ({user, updateUser}) => {
             address: formData.address,
             creditcard: formData.creditcard
         }
-
-        console.log(data)
 
         updateUser(data);
         alert("Your changes has been saved.")

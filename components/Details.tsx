@@ -5,13 +5,19 @@ import { TwoStar } from "./StarsComponents/TwoStar"
 import { ThreeStar } from "./StarsComponents/ThreeStar"
 import { FourStar } from "./StarsComponents/FourStar"
 import { FiveStar } from "./StarsComponents/FiveStar"
+import { tempObject } from "./interfaces"
+import { useNavigate } from 'react-router-dom'
+
 
 type detailProps = {
-    object: productObject
+    object: productObject,
+    addToCart: (data: tempObject) => Promise<void>,
+    username: String | null
 }
 
-export const Details = ({ object }: detailProps) => {
+export const Details = ({ object, addToCart, username = "placeholder"}: detailProps) => {
     const [star, setStar] = useState<() => JSX.Element | null>(() => null);
+    const navigate = useNavigate();
 
     const setStarRating = (rating: number): (() => JSX.Element | null) => {
         switch (rating) {
@@ -36,6 +42,7 @@ export const Details = ({ object }: detailProps) => {
 
     useEffect(() => {
         setStar(setStarRating(object.rating))
+
     }, [])
 
     return (
@@ -64,7 +71,8 @@ export const Details = ({ object }: detailProps) => {
                             </div>
                         </div>
 
-                        <button className="btn btn-dark btn-lg w-100 mt-5"><i className="fa fa-shopping-bag"></i> Add to Cart</button>
+                        <button className="btn btn-dark btn-lg w-100 mt-5" onClick={() =>addToCart({username: username, name: object.name, quantity: 1})}><i className="fa fa-shopping-bag"></i> Add to Cart</button>
+                        <button className="btn btn-dark btn-lg w-100 mt-1" onClick={() => navigate("/cart")}>Check out</button>
                     </div>
                 </div>
             </div>

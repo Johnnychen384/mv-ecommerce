@@ -1,22 +1,24 @@
 import React from "react"
-import { Link, useNavigate} from 'react-router-dom'
-import { productObject } from './interfaces'
+import { Link } from 'react-router-dom'
+import { productObject, tempObject } from './interfaces'
 import { ClothesCard } from "./CardsComponents/ClothesCard"
 import { ElectronicCard } from "./CardsComponents/ElectronicCard"
 
 type mainProps = {
     clothesArray: productObject[],
     electronicArray: productObject[],
-    selectProduct: (product: productObject) => void
+    selectProduct: (product: productObject) => void,
+    addToCart: (data: tempObject) => Promise<void>,
+    username: String | null
 }
 
 
-export const Main = ({clothesArray, electronicArray, selectProduct}: mainProps) => {
+export const Main = ({clothesArray, electronicArray, selectProduct, addToCart, username}: mainProps) => {
 
-    const clothesCards = clothesArray.map((item, indx) => <ClothesCard key={indx} clothesObject={item} selectProduct={selectProduct}/>)
+    const clothesCards = clothesArray.map((item, indx) => <ClothesCard key={indx} clothesObject={item} selectProduct={selectProduct} addToCart={addToCart} username={username}/>)
     const clothesCards3 = [clothesCards[0], clothesCards[1], clothesCards[2]]
 
-    const electronicCards = electronicArray.map((item, indx) => <ElectronicCard key={indx} electronicObject={item} selectProduct={selectProduct}/>)
+    const electronicCards = electronicArray.map((item, indx) => <ElectronicCard key={indx} electronicObject={item} selectProduct={selectProduct} addToCart={addToCart} username={username}/>)
     const electronicCards3 = [electronicCards[0], electronicCards[1], electronicCards[2]]
     
 

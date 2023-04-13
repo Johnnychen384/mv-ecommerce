@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link, useNavigate} from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 type navProps = {
     logOut: () => void
@@ -9,7 +9,7 @@ export const Nav = ({logOut}: navProps) => {
     return (
         <nav className="navbar navbar-expand-md navbar-dark bg-dark py-3">
             <div className="container-fluid">
-                <a className="navbar-brand mx-3" href="/"><i className="fab fa-shopify"></i></a>
+                <Link className="navbar-brand mx-3" to="/main"><i className="fab fa-shopify"></i></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -17,7 +17,7 @@ export const Nav = ({logOut}: navProps) => {
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <ul className="navbar-nav me-auto mb-2 mb-md-0">
                         <li className="nav-item mx-2">
-                            <a className="nav-link" aria-current="page" href="/main">Home</a>
+                            <Link className="nav-link" aria-current="page" to="/main">Home</Link>
                         </li>
                         <li className="nav-item dropdown mx-2">
                             <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Category</a>
