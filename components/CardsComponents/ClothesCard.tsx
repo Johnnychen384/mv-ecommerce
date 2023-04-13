@@ -1,5 +1,5 @@
 import React from "react"
-import { productObject } from './interfaces'
+import { productObject } from '../interfaces'
 
 type CardProps = {
     clothesObject: productObject,

@@ -1,5 +1,5 @@
 import React from "react"
-import { productObject } from './interfaces'
+import { productObject } from '../interfaces'
 
 type CardProps = {
     electronicObject: productObject,
@@ -9,9 +9,9 @@ type CardProps = {
 
 export const ElectronicCard = ({ electronicObject, selectProduct }: CardProps) => {
     return (
-        <div className="col">
-            <div className="card shadow-sm">
-                <img src={`${electronicObject.url}`} className="card-img-top" alt="your image description"/>
+        <div className="col card shadow-sm w-90 p-0">
+            <div className="card p-4 w-90 h-100">
+                <img src={`${electronicObject.url}`} className="card-img-top img-fluid" alt="your image description"/>
                 <div className="card-body">
                     <p className="card-text text-start">{electronicObject.name}</p>
                     <p className="card-text text-start">$ {electronicObject.price}</p>

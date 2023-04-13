@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react"
 import { productObject } from './interfaces'
-import { OneStar } from "./OneStar"
-import { TwoStar } from "./TwoStar"
-import { ThreeStar } from "./ThreeStar"
-import { FourStar } from "./FourStar"
-import { FiveStar } from "./FiveStar"
+import { OneStar } from "./StarsComponents/OneStar"
+import { TwoStar } from "./StarsComponents/TwoStar"
+import { ThreeStar } from "./StarsComponents/ThreeStar"
+import { FourStar } from "./StarsComponents/FourStar"
+import { FiveStar } from "./StarsComponents/FiveStar"
 
 type detailProps = {
     object: productObject

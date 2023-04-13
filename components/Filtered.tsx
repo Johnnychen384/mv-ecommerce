@@ -1,8 +1,8 @@
 import React from "react"
 import { useParams } from 'react-router-dom'
 import { productObject } from './interfaces'
-import { ClothesCard } from "./ClothesCard"
-import { ElectronicCard } from "./ElectronicCard"
+import { ClothesCard } from "./CardsComponents/ClothesCard"
+import { ElectronicCard } from "./CardsComponents/ElectronicCard"
 
 type mainProps = {
     clothesArray: productObject[],
@@ -11,8 +11,8 @@ type mainProps = {
 }
 
 export const Filtered = ({clothesArray, electronicArray, selectProduct}: mainProps) => {
-    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item} selectProduct={selectProduct}/>)
-    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item} selectProduct={selectProduct}/>)
+    const clothesCards = clothesArray.map((item, indx) => <ClothesCard key={indx} clothesObject={item} selectProduct={selectProduct}/>)
+    const electronicCards = electronicArray.map((item, indx) => <ElectronicCard key={indx} electronicObject={item} selectProduct={selectProduct}/>)
     const { category } = useParams();
 
 
@@ -20,7 +20,7 @@ export const Filtered = ({clothesArray, electronicArray, selectProduct}: mainPro
         <>  
             <div className="album py-5 bg-body-tertiary">
                 <div className="container">
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3 mt-1">
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-1 d-flex justify-content-center">
                         {category === "clothes" ? clothesCards : electronicCards}
                     </div>
                 </div>

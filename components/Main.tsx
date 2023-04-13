@@ -1,8 +1,8 @@
 import React from "react"
 import { Link, useNavigate} from 'react-router-dom'
 import { productObject } from './interfaces'
-import { ClothesCard } from "./ClothesCard"
-import { ElectronicCard } from "./ElectronicCard"
+import { ClothesCard } from "./CardsComponents/ClothesCard"
+import { ElectronicCard } from "./CardsComponents/ElectronicCard"
 
 type mainProps = {
     clothesArray: productObject[],
@@ -13,10 +13,10 @@ type mainProps = {
 
 export const Main = ({clothesArray, electronicArray, selectProduct}: mainProps) => {
 
-    const clothesCards = clothesArray.map(item => <ClothesCard clothesObject={item} selectProduct={selectProduct}/>)
+    const clothesCards = clothesArray.map((item, indx) => <ClothesCard key={indx} clothesObject={item} selectProduct={selectProduct}/>)
     const clothesCards3 = [clothesCards[0], clothesCards[1], clothesCards[2]]
 
-    const electronicCards = electronicArray.map(item => <ElectronicCard electronicObject={item} selectProduct={selectProduct}/>)
+    const electronicCards = electronicArray.map((item, indx) => <ElectronicCard key={indx} electronicObject={item} selectProduct={selectProduct}/>)
     const electronicCards3 = [electronicCards[0], electronicCards[1], electronicCards[2]]
     
 
@@ -27,10 +27,7 @@ export const Main = ({clothesArray, electronicArray, selectProduct}: mainProps) 
                     <div className="col-lg-6 col-md-8 mx-auto">
                         <h1 className="fw-light">Lorem ipsum dolor sit amet elit.</h1>
                         <p className="lead text-body-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt quae maiores culpa vero et sed autem aliquam recusandae, quisquam, quod provident? Perspiciatis, ratione. Nobis fuga, eligendi nemo architecto officia quo.</p>
-                        <p>
-                            <a href="#" className="btn btn-primary my-2">Main call to action</a>
-                            <a href="#" className="btn btn-secondary my-2">Secondary action</a>
-                        </p>
+                        
                     </div>
                 </div>
                 <hr className="featurette-divider" />

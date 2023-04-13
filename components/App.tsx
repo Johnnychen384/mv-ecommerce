@@ -8,6 +8,9 @@ import { Main } from "./Main"
 import { Filtered } from './Filtered'
 import { productObject } from './interfaces'
 import { Details } from "./Details"
+import { Profile } from "./Profile"
+import "../index.css"
+
 
 
 
@@ -72,6 +75,20 @@ export const App = () => {
         }
     }
 
+    const updateUser = async (data: object) => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        
+        try{
+            const res: AxiosResponse = await axios.put(`http://localhost:8080/api/user`, data, config);
+            setUser(res.data);
+            console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const selectProduct = (product: productObject) => {
         setSelectedProduct(product);
         navigate("/details")
@@ -89,14 +106,13 @@ export const App = () => {
     const electronicArray: productObject[] = products ? products.filter(item => item.category === "Electronic") : [];
 
     useEffect(() => {
-        let user : {token: String, username: String};
 
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
-            user = JSON.parse(storedUser);
-            setToken(user.token)
-            setUsername(user.username)
-            getUser(user.username)
+            let users = JSON.parse(storedUser);
+            setToken(users.token)
+            setUsername(users.username)
+            getUser(users.username)
             getAllProducts()
             navigate("/main")
 
@@ -105,15 +121,13 @@ export const App = () => {
                 getUser(username);
                 getAllProducts();
 
-                user = {
+                localStorage.setItem("user", JSON.stringify({
                     token: token,
                     username: username
-                };
-
-                localStorage.setItem("user", JSON.stringify(user));
+                }));
             }
         }
-        console.log(products);
+        
     }, [username, token]);
 
 
@@ -128,6 +142,7 @@ export const App = () => {
                 <Route path="/main" element={<Main clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>} />
                 <Route path="/filter/:category" element={<Filtered clothesArray={clothesArray} electronicArray={electronicArray} selectProduct={selectProduct}/>}/>
                 <Route path='/details' element={<Details object={selectedProduct}/>} />
+                <Route path='/profile' element={<Profile user={user} updateUser={updateUser}/>} />
             </Routes>
         </main>
     )

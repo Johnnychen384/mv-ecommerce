@@ -6,3 +6,11 @@ export interface productObject {
     rating: number,
     url: String
 }
+
+export interface userObject {
+    email: String,
+    username: String,
+    password: String,
+    address: String,
+    creditcard: String
+}
