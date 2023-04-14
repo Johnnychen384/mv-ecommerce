@@ -29,3 +29,9 @@ export interface cartObject {
     quantity: number,
     total: number
 }
+
+export interface soldObject {
+    id: number,
+    product: productObject,
+    totalAmountBought: number
+}

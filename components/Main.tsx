@@ -9,17 +9,18 @@ type mainProps = {
     electronicArray: productObject[],
     selectProduct: (product: productObject) => void,
     addToCart: (data: tempObject) => Promise<void>,
-    username: String | null
+    username: String | null,
+    trendingArray: JSX.Element[]
 }
 
 
-export const Main = ({clothesArray, electronicArray, selectProduct, addToCart, username}: mainProps) => {
+export const Main = ({clothesArray, electronicArray, selectProduct, addToCart, username, trendingArray}: mainProps) => {
 
     const clothesCards = clothesArray.map((item, indx) => <ClothesCard key={indx} clothesObject={item} selectProduct={selectProduct} addToCart={addToCart} username={username}/>)
-    const clothesCards3 = [clothesCards[0], clothesCards[1], clothesCards[2]]
+    const clothesCards3 = [clothesCards[0], clothesCards[1], clothesCards[2], clothesCards[3]]
 
     const electronicCards = electronicArray.map((item, indx) => <ElectronicCard key={indx} electronicObject={item} selectProduct={selectProduct} addToCart={addToCart} username={username}/>)
-    const electronicCards3 = [electronicCards[0], electronicCards[1], electronicCards[2]]
+    const electronicCards3 = [electronicCards[0], electronicCards[1], electronicCards[2], electronicCards[3]]
     
 
     return (
@@ -37,9 +38,9 @@ export const Main = ({clothesArray, electronicArray, selectProduct, addToCart, u
 
             <div className="album py-5 bg-body-tertiary">
                 <div className="container">
-                    <h3 className="fw-bold">Trending <Link to="/filter/trending" className="fs-6 text-decoration-none fw-light px-2">See more</Link></h3>
+                    <h3 className="fw-bold">Trending</h3>
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-1">
-                        {clothesCards3}
+                        {trendingArray}
                     </div>
 
                     <hr className="featurette-divider my-5" />
